@@ -1,12 +1,24 @@
+import { QuerySearchSuperHeroArgs, Resolvers } from "../../typings/generated";
+import { AuthContext } from "../../middlewares";
 
-export const searchResolvers = {
+export const searchResolvers: Resolvers<AuthContext> = {
+
   Query: {
-    searchSuperHero: (_root, args, { dataSources }) => {
-      return dataSources?.superheroApi.searchSuperHero(args.name);
+    searchSuperHero: (_root, { name} , { dataSources }) => {
+      return dataSources?.superheroApi.searchSuperHero(name as any as QuerySearchSuperHeroArgs) ;
     },
 
     viewSuperHeroDetails: (_root, { id }, { dataSources }) => {
-      return dataSources?.superHeroApi.viewSuperHeroDetails(id as Number);
+      return dataSources?.superheroApi.viewSuperHeroDetails(id as Number);
     },
+  },
+
+  Mutation: {
+    updateAvatarAndStats: (_root, args, { dataSources }) => {
+      return dataSources.superheroApi.updateAvatarAndStats(args.id, args.payload);
+    },
+    updatePowerStats: (_root, {id, payload}, {dataSources }) => {
+      return dataSources.superheroApi.updatePowerStats(id, payload);
+    }
   }
 };

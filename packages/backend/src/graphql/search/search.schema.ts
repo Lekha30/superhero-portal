@@ -53,7 +53,7 @@ export const searchTypeDefs = gql`
   type SuperHero {
     id: Int!
     name: String!
-    powerStats: PowerStats
+    powerstats: PowerStats
     biography: Biography
     appearance: Appearance
     work: Work
@@ -64,18 +64,22 @@ export const searchTypeDefs = gql`
   type SuperHeroSearch {
    results: [SuperHero]
   }
+  input PowerStatsInput {
+    intelligence: Int
+    strength: Int
+    speed: Int
+    durability: Int
+    power: Int
+    combat: Int
+  }
 
   input AvatarAndStatsInput {
-    powerStats: PowerStats!
+    powerStats: PowerStatsInput!
     image: Upload!
   }
 
-  input PowerStatsInput {
-    powerStats: PowerStats!
-  }
-
   type Query {
-    searchSuperHero(name: String!): SuperHeroSearch!
+    searchSuperHero(name: String!): [SuperHeroSearch!]
     viewSuperHeroDetails(id: Int!): SuperHero!
   }
 

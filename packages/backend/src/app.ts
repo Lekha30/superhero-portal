@@ -13,7 +13,6 @@ import { initializedDS } from './datasources';
 import { schema } from './graphql';
 import {
   ApolloLogPlugin,
-  authContext,
   formatError,
 } from './middlewares';
 
@@ -48,7 +47,6 @@ app.use(graphqlUploadExpress()); // Used to parse uploaded files to graphql
 
 export const apolloConfig: Config<ExpressContext> = {
   schema,
-  context: authContext,
   formatError,
   dataSources: initializedDS as any,
   introspection: isDevelopment,

@@ -1,6 +1,6 @@
 import { RESTDataSource } from '@apollo/datasource-rest';
 import { API_URL, FB_ACCESS_TOKEM } from '../config';
-import { QuerySearchSuperHeroArgs } from 'src/typings/generated';
+import { QuerySearchSuperHeroArgs, SuperHeroSearch } from 'src/typings/generated';
 
 export default class SuperHeroApi extends RESTDataSource {
 
@@ -14,7 +14,7 @@ export default class SuperHeroApi extends RESTDataSource {
 
 
   //TODO:  Fix typings
-  async searchSuperHero ({ name }: QuerySearchSuperHeroArgs): Promise<any[]> {
+  async searchSuperHero ({ name }: QuerySearchSuperHeroArgs): Promise<SuperHeroSearch[]> {
 
     const path = `${this.baseURL}/${this.token}/search/${name}`;
     const matchedSuperHeros = await this.get<any[]>(path);
@@ -33,10 +33,10 @@ export default class SuperHeroApi extends RESTDataSource {
 
   }
 
-  async updatePowerStats(payload: any): Promise<any> {
+  async updatePowerStats(id: Number, payload: any): Promise<any> {
     try {
       // Assuming there is a path called powerstats
-      const res = await this.patch(`${this.baseURL}/${this.token}/api/powerstats`, payload);
+      const res = await this.patch(`${this.baseURL}/${this.token}/api/${id}/powerstats`, payload);
       // Query superhero details and then return it back
       return res;
     } catch (error) {
@@ -47,7 +47,7 @@ export default class SuperHeroApi extends RESTDataSource {
 
   // To be implemented
   // @ts-ignore
-  async updateAvatarAndStats(payload: any): Promise<any> {
+  async updateAvatarAndStats(id: Number, payload: any): Promise<any> {
     // Call the power stats method
     // update avatar separately
   }

@@ -3,11 +3,9 @@ import cors from 'cors';
 import express from 'express';
 // import { graphqlUploadExpress } from 'graphql-upload';
 import { apolloConfig } from './app';
-// import { finalErrorHandler, lambdaContext } from './middlewares';
 
 export const apolloServer = new ApolloServer({
   ...apolloConfig,
-  // context: lambdaContext,
 });
 
 exports.handler = apolloServer.createHandler({

@@ -30,7 +30,7 @@ export type Appearance = {
 
 export type AvatarAndStatsInput = {
   image: Scalars['Upload'];
-  powerStats: PowerStats;
+  powerStats: PowerStatsInput;
 };
 
 export type Biography = {
@@ -85,11 +85,16 @@ export type PowerStats = {
 };
 
 export type PowerStatsInput = {
-  powerStats: PowerStats;
+  combat?: InputMaybe<Scalars['Int']>;
+  durability?: InputMaybe<Scalars['Int']>;
+  intelligence?: InputMaybe<Scalars['Int']>;
+  power?: InputMaybe<Scalars['Int']>;
+  speed?: InputMaybe<Scalars['Int']>;
+  strength?: InputMaybe<Scalars['Int']>;
 };
 
 export type Query = {
-  searchSuperHero: SuperHeroSearch;
+  searchSuperHero?: Maybe<Array<SuperHeroSearch>>;
   viewSuperHeroDetails: SuperHero;
 };
 
@@ -110,7 +115,7 @@ export type SuperHero = {
   id: Scalars['Int'];
   image: Image;
   name: Scalars['String'];
-  powerStats?: Maybe<PowerStats>;
+  powerstats?: Maybe<PowerStats>;
   work?: Maybe<Work>;
 };
 
@@ -294,7 +299,7 @@ export type PowerStatsResolvers<ContextType = any, ParentType extends ResolversP
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  searchSuperHero?: Resolver<ResolversTypes['SuperHeroSearch'], ParentType, ContextType, RequireFields<QuerySearchSuperHeroArgs, 'name'>>;
+  searchSuperHero?: Resolver<Maybe<Array<ResolversTypes['SuperHeroSearch']>>, ParentType, ContextType, RequireFields<QuerySearchSuperHeroArgs, 'name'>>;
   viewSuperHeroDetails?: Resolver<ResolversTypes['SuperHero'], ParentType, ContextType, RequireFields<QueryViewSuperHeroDetailsArgs, 'id'>>;
 }>;
 
@@ -305,7 +310,7 @@ export type SuperHeroResolvers<ContextType = any, ParentType extends ResolversPa
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   image?: Resolver<ResolversTypes['Image'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  powerStats?: Resolver<Maybe<ResolversTypes['PowerStats']>, ParentType, ContextType>;
+  powerstats?: Resolver<Maybe<ResolversTypes['PowerStats']>, ParentType, ContextType>;
   work?: Resolver<Maybe<ResolversTypes['Work']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
