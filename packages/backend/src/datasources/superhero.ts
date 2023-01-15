@@ -1,6 +1,11 @@
 import { RESTDataSource } from '@apollo/datasource-rest';
 import { API_URL, FB_ACCESS_TOKEM } from '../config';
-import { QuerySearchSuperHeroArgs, SuperHeroSearch } from 'src/typings/generated';
+import { SuperHero } from 'src/typings/generated';
+
+interface SuperHeroResponse {
+  response: string;
+  results: SuperHero;
+}
 
 export default class SuperHeroApi extends RESTDataSource {
 
@@ -14,20 +19,22 @@ export default class SuperHeroApi extends RESTDataSource {
 
 
   //TODO:  Fix typings
-  async searchSuperHero ({ name }: QuerySearchSuperHeroArgs): Promise<SuperHeroSearch[]> {
+  async searchSuperHero ( name : string): Promise<SuperHero[]> {
 
     const path = `${this.baseURL}/${this.token}/search/${name}`;
-    const matchedSuperHeros = await this.get<any[]>(path);
-    //@ts-ignore
+    console.log('path:', path);
+    const matchedSuperHeros = await this.get<SuperHeroResponse>(path);
+    console.log(matchedSuperHeros);
+    // //@ts-ignore
     if(!Array.isArray(matchedSuperHeros?.results)) {
-      return [] as any[];
+      return [] as SuperHero[];
     }
     //@ts-ignore
-    return { results: matchedSuperHeros?.results?.map(superhero => superhero) as any[]};
+    return  matchedSuperHeros?.results?.map(superhero => superhero) as any[];
   }
 
   async viewSuperHeroDetails(id: Number): Promise<any> {
-    const path = `${this.baseURL}${this.token}/${id}`;
+    const path = `${this.baseURL}/${this.token}/${id}`;
     const mySuperHeroDetails = await this.get(path);
     return mySuperHeroDetails;
 

@@ -1,14 +1,18 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import {AppBar, Grid} from '@mui/material';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import { useQuery } from '@apollo/client';
+import {
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  InputBase,
+  Button,
+  FormControl,
+  Input,
+} from '@mui/material';
+import { Menu as MenuIcon, Search as SearchIcon } from '@mui/icons-material';
+import { QuerySearchSuperHeroArgs, useSearchSuperHeroQuery } from '../../typings/generated';
 // import { SuperHeroSearch } from '../../graphql';
 
 const Search = styled('div')(({ theme }) => ({
@@ -53,12 +57,29 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+
 export const Home: React.FC = () => {
-  const [name, setName ] = React.useState('');
-  // const [ loading, error, data] = useQuery('SuperHeroSearch');
-  const handleSearch = (event: any) => {
-    setName(event?.target?.value);
+  const [searchSuperHeroIp, setSearchSuperHero] = React.useState<QuerySearchSuperHeroArgs>();
+
+  const [{ data, error, fetching }, searchSuperHero ] =  useSearchSuperHeroQuery({
+    variables: searchSuperHeroIp,
+    requestPolicy: 'network-only',
+  });
+  const handleSearch = ((event: any) =>  {
+    event.preventDefault();
+    console.log('variables:', searchSuperHeroIp);
+    const results =  searchSuperHero({
+      variables: searchSuperHeroIp
+    });
+    console.log('results', results);
+    });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('changed val:', event.target.value);
+    setSearchSuperHero({ name: event?.target?.value });
   }
+
+ 
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -81,15 +102,12 @@ export const Home: React.FC = () => {
           >
             Search your favourite Super Hero
           </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <IconButton onClick={handleSearch} />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
+          <FormControl>
+            <Input placeholder="Superhero name" onChange={ handleChange } />
+            <Button type="submit" variant="contained" onClick={ handleSearch } color="primary" style={{ marginLeft: 20 }}>
+              Submit
+            </Button>
+          </FormControl>
         </Toolbar>
       </AppBar>
       <Box>

@@ -1,11 +1,12 @@
-import { QuerySearchSuperHeroArgs, Resolvers } from "../../typings/generated";
+import { Resolvers } from "../../typings/generated";
 import { AuthContext } from "../../middlewares";
 
 export const searchResolvers: Resolvers<AuthContext> = {
 
   Query: {
-    searchSuperHero: (_root, { name} , { dataSources }) => {
-      return dataSources?.superheroApi.searchSuperHero(name as any as QuerySearchSuperHeroArgs) ;
+    searchSuperHero: (_root, { name } , { dataSources }) => {
+      console.log('name in resolver:', name);
+      return dataSources?.superheroApi.searchSuperHero(name) ;
     },
 
     viewSuperHeroDetails: (_root, { id }, { dataSources }) => {

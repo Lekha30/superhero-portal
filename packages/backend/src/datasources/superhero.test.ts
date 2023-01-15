@@ -1,5 +1,4 @@
 
-import { QuerySearchSuperHeroArgs } from '../typings/generated';
 import SuperHeroApi from './superhero';
 
 jest.mock('axios');
@@ -7,9 +6,7 @@ jest.mock('axios');
 describe('module: SuperHeroApi DataSource', () => {
   describe('func: searchSuperHero', () => {
     it('should call searchSuperHero api', async () => {
-      const args: QuerySearchSuperHeroArgs = {
-       name: 'batman',
-      };
+      const name = "batman";
       const data = {"results": [
         {
           "id": "69",
@@ -164,17 +161,16 @@ describe('module: SuperHeroApi DataSource', () => {
      
       const superHeroApi = new SuperHeroApi();
 
-      const res = await superHeroApi.searchSuperHero(args);
+      const res = await superHeroApi.searchSuperHero(name);
       expect(res).toStrictEqual(data);
     });
 
     it('should return empty arrays for unknown values', async () => {
-      const args: QuerySearchSuperHeroArgs = {
-        name: "21",
-      };
+      
+      const name = "21";
 
       const superHeroService = new SuperHeroApi();   
-      const res = await superHeroService.searchSuperHero(args);
+      const res = await superHeroService.searchSuperHero(name);
       expect(res).toStrictEqual([]);
       
     });
