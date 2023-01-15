@@ -2,13 +2,14 @@
 import { cacheExchange } from '@urql/exchange-graphcache';
 // import { multipartFetchExchange } from '@urql/exchange-multipart-fetch';
 import toast from 'react-hot-toast';
-import { createClient, dedupExchange, errorExchange } from 'urql';
+import { createClient, dedupExchange, errorExchange, fetchExchange } from 'urql';
 import { config } from '../config';
 
 /**
  * Consistently determine the API URL for the current client even when in a deploy preview or similar
  */
 const getAPIUrl = (): string => {
+  console.log(config.apiBaseUrl);
   return `${config.apiBaseUrl}/graphql`;
 };
 
@@ -26,6 +27,7 @@ export const client = () =>
           SuperHero: () => null,
         },
       }),
+      fetchExchange,
   
       // multipartFetchExchange,
     ],

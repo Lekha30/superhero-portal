@@ -13,6 +13,9 @@ import {
 } from '@mui/material';
 import { Menu as MenuIcon, Search as SearchIcon } from '@mui/icons-material';
 import { QuerySearchSuperHeroArgs, useSearchSuperHeroQuery } from '../../typings/generated';
+import { useQuery } from 'urql';
+import { Layout } from '../layouts/Layout';
+import SuperHeroList from '../../components/SuperHeroList';
 // import { SuperHeroSearch } from '../../graphql';
 
 const Search = styled('div')(({ theme }) => ({
@@ -58,20 +61,50 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-export const Home: React.FC = () => {
+export const Home: React.FC = (props: any) => {
   const [searchSuperHeroIp, setSearchSuperHero] = React.useState<QuerySearchSuperHeroArgs>();
 
-  const [{ data, error, fetching }, searchSuperHero ] =  useSearchSuperHeroQuery({
-    variables: searchSuperHeroIp,
-    requestPolicy: 'network-only',
+  // const [{ data, error, fetching }, searchSuperHero ] =  useSearchSuperHeroQuery({
+  //   variables: searchSuperHeroIp,
+  //   requestPolicy: 'network-only',
+  // });
+
+  const query = `
+  query searchSuperHero($name: String!) {
+    searchSuperHero(name: $name) {
+      id
+      name
+      powerstats {
+        intelligence
+        strength
+        speed
+        durability
+        power
+        combat
+      }
+      image {
+        url
+      }
+    }
+  }
+  `;
+
+  const [ result, reexecuteQuery] = useQuery({
+    query,
+    variables: searchSuperHeroIp
   });
+
+  console.log('result:', result);
+  
   const handleSearch = ((event: any) =>  {
     event.preventDefault();
     console.log('variables:', searchSuperHeroIp);
-    const results =  searchSuperHero({
-      variables: searchSuperHeroIp
+   
+    reexecuteQuery({
+      variables: searchSuperHeroIp,
+      requestPolicy: 'network-only',
     });
-    console.log('results', results);
+    console.log('results', result);
     });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,42 +112,14 @@ export const Home: React.FC = () => {
     setSearchSuperHero({ name: event?.target?.value });
   }
 
- 
+ const { data, fetching, error} = result;
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-            Search your favourite Super Hero
-          </Typography>
-          <FormControl>
-            <Input placeholder="Superhero name" onChange={ handleChange } />
-            <Button type="submit" variant="contained" onClick={ handleSearch } color="primary" style={{ marginLeft: 20 }}>
-              Submit
-            </Button>
-          </FormControl>
-        </Toolbar>
-      </AppBar>
-      <Box>
-        <Grid>
-          
-        </Grid>
-      </Box>
-    </Box>
+    <Layout>
+      <div style={{ marginTop: 20 }}>
+        <Typography variant="h5">{`Search your favourite super hero here!`}</Typography>
+      </div>
+      <SuperHeroList />
+    </Layout>
   );
 }
