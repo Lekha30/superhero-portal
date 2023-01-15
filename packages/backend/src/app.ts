@@ -9,7 +9,7 @@ import express from 'express';
 import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
 import { createServer } from 'http';
 import { isDevelopment, PORT } from './config';
-import dataSources from './datasources';
+import { initializedDS } from './datasources';
 import { schema } from './graphql';
 import {
   ApolloLogPlugin,
@@ -50,7 +50,7 @@ export const apolloConfig: Config<ExpressContext> = {
   schema,
   context: authContext,
   formatError,
-  dataSources,
+  dataSources: initializedDS as any,
   introspection: isDevelopment,
   plugins: [
     // @ts-ignore

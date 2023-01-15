@@ -5,7 +5,7 @@ export const searchResolvers = {
       return dataSources?.superheroApi.searchSuperHero(args.name);
     },
 
-    viewSuperHero: (_root, { id }, { dataSources }) => {
+    viewSuperHeroDetails: (_root, { id }, { dataSources }) => {
       return dataSources?.superHeroApi.viewSuperHeroDetails(id as Number);
     },
   }

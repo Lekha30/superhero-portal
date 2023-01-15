@@ -72,7 +72,7 @@ export type MutationUpdateAvatarAndStatsArgs = {
 
 export type MutationUpdatePowerStatsArgs = {
   id: Scalars['Int'];
-  payload: PowerStats;
+  payload: PowerStatsInput;
 };
 
 export type PowerStats = {
@@ -82,6 +82,10 @@ export type PowerStats = {
   power?: Maybe<Scalars['Int']>;
   speed?: Maybe<Scalars['Int']>;
   strength?: Maybe<Scalars['Int']>;
+};
+
+export type PowerStatsInput = {
+  powerStats: PowerStats;
 };
 
 export type Query = {
@@ -201,6 +205,7 @@ export type ResolversTypes = ResolversObject<{
   JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
   Mutation: ResolverTypeWrapper<{}>;
   PowerStats: ResolverTypeWrapper<PowerStats>;
+  PowerStatsInput: PowerStatsInput;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   SuperHero: ResolverTypeWrapper<SuperHero>;
@@ -223,6 +228,7 @@ export type ResolversParentTypes = ResolversObject<{
   JSONObject: Scalars['JSONObject'];
   Mutation: {};
   PowerStats: PowerStats;
+  PowerStatsInput: PowerStatsInput;
   Query: {};
   String: Scalars['String'];
   SuperHero: SuperHero;

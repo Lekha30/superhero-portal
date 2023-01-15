@@ -1,5 +1,6 @@
 import { RESTDataSource } from '@apollo/datasource-rest';
-import { API_URL, FB_ACCESS_TOKEM } from 'src/config';
+import { API_URL, FB_ACCESS_TOKEM } from '../config';
+import { QuerySearchSuperHeroArgs } from 'src/typings/generated';
 
 export default class SuperHeroApi extends RESTDataSource {
 
@@ -12,19 +13,21 @@ export default class SuperHeroApi extends RESTDataSource {
   }
 
 
-  async searchSuperHero (name: String): Promise<any> {
+  //TODO:  Fix typings
+  async searchSuperHero ({ name }: QuerySearchSuperHeroArgs): Promise<any[]> {
 
-    const path = `${this.token}/search/${name}`;
-    const matchedSuperHeros = await this.get(path);
-    if(!Array.isArray(matchedSuperHeros)) {
-      return [];
+    const path = `${this.baseURL}/${this.token}/search/${name}`;
+    const matchedSuperHeros = await this.get<any[]>(path);
+    //@ts-ignore
+    if(!Array.isArray(matchedSuperHeros?.results)) {
+      return [] as any[];
     }
-    // @ts-ignore
-    return matchedSuperHeros?.results?.map((superHero) => superHero) as any;
+    //@ts-ignore
+    return { results: matchedSuperHeros?.results?.map(superhero => superhero) as any[]};
   }
 
   async viewSuperHeroDetails(id: Number): Promise<any> {
-    const path = `${this.token}/${id}`;
+    const path = `${this.baseURL}${this.token}/${id}`;
     const mySuperHeroDetails = await this.get(path);
     return mySuperHeroDetails;
 
@@ -33,7 +36,7 @@ export default class SuperHeroApi extends RESTDataSource {
   async updatePowerStats(payload: any): Promise<any> {
     try {
       // Assuming there is a path called powerstats
-      const res = await this.put('/api/powerstats', payload);
+      const res = await this.patch(`${this.baseURL}/${this.token}/api/powerstats`, payload);
       // Query superhero details and then return it back
       return res;
     } catch (error) {

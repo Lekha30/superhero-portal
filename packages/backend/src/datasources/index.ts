@@ -5,7 +5,7 @@ export interface DataSources {
   superheroApi: SuperHeroApi;
 }
 
-export default () => {
+export const initializedDS = () => {
   return {
     superheroApi: new SuperHeroApi(),
   };

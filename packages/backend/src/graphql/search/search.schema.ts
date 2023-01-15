@@ -70,13 +70,17 @@ export const searchTypeDefs = gql`
     image: Upload!
   }
 
+  input PowerStatsInput {
+    powerStats: PowerStats!
+  }
+
   type Query {
     searchSuperHero(name: String!): SuperHeroSearch!
     viewSuperHeroDetails(id: Int!): SuperHero!
   }
 
   type Mutation {
-    updatePowerStats(id: Int!, payload: PowerStats!): SuperHero!
+    updatePowerStats(id: Int!, payload: PowerStatsInput!): SuperHero!
     updateAvatarAndStats(id: Int!, payload: AvatarAndStatsInput!): SuperHero!
   }
 `;
