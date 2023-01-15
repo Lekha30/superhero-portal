@@ -12,12 +12,11 @@ This is a monorepo which uses lerna.
 
 ## Problems faced when building this project from scratch
 |Serial No.|Problem | Resolution taken
+|-----------|-----------|----------------
 |1 | Graphql Schema import errors |Added ts-node/register in codegen.yml
-|2 |Failed to load schema from ./src/schema.ts:
-      Unable to load from file "/superhero-portal/packages/backend/src/schema.ts": GraphQLError: Syntax Error: Expec…| yarn add graphql-scalars and added typescript: *scalars in codegen.yml
+|2 |Failed to load schema from ./src/schema.ts:  Unable to load from file "/superhero-portal/packages/backend/src/schema.ts": GraphQLError: Syntax Error: Expec…| yarn add graphql-scalars and added typescript: *scalars in codegen.yml
 |3 |Aliased anchor not found: scalarmaps at line 16, column 21: | Scalar config was missing which was fixed later
-|4|Frontend| export 'default' (reexported as 'ReactNativeFile') was not found in './ReactNativeFile.js' (module has no exports)| Looks like I did not install typescript related packages for urql
-yarn remove @urql/exchange-multipart-fetch
+|4|Frontend - export 'default' (reexported as 'ReactNativeFile') was not found in './ReactNativeFile.js' (module has no exports)| Looks like I did not install typescript related packages for urql - yarn remove @urql/exchange-multipart-fetch
 |5| codegen errors-    Error 2: Cannot query field "powerstats" on type "SuperHeroSearch".|Incorrect mapping of results in the original schema- forgot to add select fields in the query
 |6| the name in the search was always undefined| corrected typings
 |7| Issue connecting to the graphql server | **could not be corrected **
