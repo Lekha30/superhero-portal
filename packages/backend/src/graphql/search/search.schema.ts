@@ -61,6 +61,13 @@ export const searchTypeDefs = gql`
     image: Image!
   }
 
+  type SuperHeroTruncated {
+    id: Int!
+    name: String!
+    powerstats: PowerStats
+    image: Image
+  }
+
   type SuperHeroSearch {
    results: [SuperHero]
   }
@@ -79,12 +86,12 @@ export const searchTypeDefs = gql`
   }
 
   type Query {
-    searchSuperHero(name: String!): [SuperHeroSearch!]
+    searchSuperHero(name: String!): [SuperHero!]
     viewSuperHeroDetails(id: Int!): SuperHero!
   }
 
   type Mutation {
-    updatePowerStats(id: Int!, payload: PowerStatsInput!): SuperHero!
-    updateAvatarAndStats(id: Int!, payload: AvatarAndStatsInput!): SuperHero!
+    updatePowerStats(id: Int!, payload: PowerStatsInput!): SuperHeroTruncated!
+    updateAvatarAndStats(id: Int!, payload: AvatarAndStatsInput!): SuperHeroTruncated!
   }
 `;

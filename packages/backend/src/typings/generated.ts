@@ -59,8 +59,8 @@ export type Image = {
 };
 
 export type Mutation = {
-  updateAvatarAndStats: SuperHero;
-  updatePowerStats: SuperHero;
+  updateAvatarAndStats: SuperHeroTruncated;
+  updatePowerStats: SuperHeroTruncated;
 };
 
 
@@ -94,7 +94,7 @@ export type PowerStatsInput = {
 };
 
 export type Query = {
-  searchSuperHero?: Maybe<Array<SuperHeroSearch>>;
+  searchSuperHero?: Maybe<Array<SuperHero>>;
   viewSuperHeroDetails: SuperHero;
 };
 
@@ -121,6 +121,13 @@ export type SuperHero = {
 
 export type SuperHeroSearch = {
   results?: Maybe<Array<Maybe<SuperHero>>>;
+};
+
+export type SuperHeroTruncated = {
+  id: Scalars['Int'];
+  image?: Maybe<Image>;
+  name: Scalars['String'];
+  powerstats?: Maybe<PowerStats>;
 };
 
 export type Work = {
@@ -215,6 +222,7 @@ export type ResolversTypes = ResolversObject<{
   String: ResolverTypeWrapper<Scalars['String']>;
   SuperHero: ResolverTypeWrapper<SuperHero>;
   SuperHeroSearch: ResolverTypeWrapper<SuperHeroSearch>;
+  SuperHeroTruncated: ResolverTypeWrapper<SuperHeroTruncated>;
   URL: ResolverTypeWrapper<Scalars['URL']>;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
   Work: ResolverTypeWrapper<Work>;
@@ -238,6 +246,7 @@ export type ResolversParentTypes = ResolversObject<{
   String: Scalars['String'];
   SuperHero: SuperHero;
   SuperHeroSearch: SuperHeroSearch;
+  SuperHeroTruncated: SuperHeroTruncated;
   URL: Scalars['URL'];
   Upload: Scalars['Upload'];
   Work: Work;
@@ -284,8 +293,8 @@ export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<Resolver
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  updateAvatarAndStats?: Resolver<ResolversTypes['SuperHero'], ParentType, ContextType, RequireFields<MutationUpdateAvatarAndStatsArgs, 'id' | 'payload'>>;
-  updatePowerStats?: Resolver<ResolversTypes['SuperHero'], ParentType, ContextType, RequireFields<MutationUpdatePowerStatsArgs, 'id' | 'payload'>>;
+  updateAvatarAndStats?: Resolver<ResolversTypes['SuperHeroTruncated'], ParentType, ContextType, RequireFields<MutationUpdateAvatarAndStatsArgs, 'id' | 'payload'>>;
+  updatePowerStats?: Resolver<ResolversTypes['SuperHeroTruncated'], ParentType, ContextType, RequireFields<MutationUpdatePowerStatsArgs, 'id' | 'payload'>>;
 }>;
 
 export type PowerStatsResolvers<ContextType = any, ParentType extends ResolversParentTypes['PowerStats'] = ResolversParentTypes['PowerStats']> = ResolversObject<{
@@ -299,7 +308,7 @@ export type PowerStatsResolvers<ContextType = any, ParentType extends ResolversP
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  searchSuperHero?: Resolver<Maybe<Array<ResolversTypes['SuperHeroSearch']>>, ParentType, ContextType, RequireFields<QuerySearchSuperHeroArgs, 'name'>>;
+  searchSuperHero?: Resolver<Maybe<Array<ResolversTypes['SuperHero']>>, ParentType, ContextType, RequireFields<QuerySearchSuperHeroArgs, 'name'>>;
   viewSuperHeroDetails?: Resolver<ResolversTypes['SuperHero'], ParentType, ContextType, RequireFields<QueryViewSuperHeroDetailsArgs, 'id'>>;
 }>;
 
@@ -317,6 +326,14 @@ export type SuperHeroResolvers<ContextType = any, ParentType extends ResolversPa
 
 export type SuperHeroSearchResolvers<ContextType = any, ParentType extends ResolversParentTypes['SuperHeroSearch'] = ResolversParentTypes['SuperHeroSearch']> = ResolversObject<{
   results?: Resolver<Maybe<Array<Maybe<ResolversTypes['SuperHero']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SuperHeroTruncatedResolvers<ContextType = any, ParentType extends ResolversParentTypes['SuperHeroTruncated'] = ResolversParentTypes['SuperHeroTruncated']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  powerstats?: Resolver<Maybe<ResolversTypes['PowerStats']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -346,6 +363,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   SuperHero?: SuperHeroResolvers<ContextType>;
   SuperHeroSearch?: SuperHeroSearchResolvers<ContextType>;
+  SuperHeroTruncated?: SuperHeroTruncatedResolvers<ContextType>;
   URL?: GraphQLScalarType;
   Upload?: GraphQLScalarType;
   Work?: WorkResolvers<ContextType>;

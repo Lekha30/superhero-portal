@@ -1,4 +1,4 @@
-query SuperHeroSearch($name: String) {
+query searchSuperHero($name: String!) {
   searchSuperHero(name: $name) {
     id
     name
@@ -38,10 +38,35 @@ mutation updatePowerStats(
   $id: Int!
   $payload: PowerStatsInput!
 ) {
-  updatePowerStats(id: $id, payload: $payload)
+  updatePowerStats(id: $id, payload: $payload) {
+    id,
+    name,
+    powerstats {
+      intelligence
+      strength
+      speed
+      durability
+      power
+      combat
+    }
+  }
 }
 
-mutation updateAvatarAndStats($id: Id!) {
-  updateAvatarAndStats(id: $id, payload: $payload)
+mutation updateAvatarAndStats($id: Int!, $payload: AvatarAndStatsInput!) {
+  updateAvatarAndStats(id: $id, payload: $payload) {
+    id,
+    name,
+    powerstats {
+      intelligence
+      strength
+      speed
+      durability
+      power
+      combat
+    }
+    image {
+      url
+    }
+  }
 }
 

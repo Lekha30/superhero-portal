@@ -8,6 +8,7 @@
 packages/webapp/node_modules
 packages/backend/node_modules
 packages/backend/dist
+packages/webapp/build/*
 
 # testing
 /coverage
@@ -28,3 +29,4 @@ yarn-error.log*
 packages/backend/node_modules/*
 packages/webapp/node_modules/*
 packages/backend/dist/*
+packages/backend/tsconfig.build.tsbuildinfo

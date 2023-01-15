@@ -24,7 +24,7 @@ function App() {
           <Main />
         </Router>
       </ThemeProvider>
-      </Provider>
+    </Provider>
   );
 }
 

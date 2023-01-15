@@ -4,7 +4,7 @@ require:
   - ts-node/register
   - tsconfig-paths/register
 generates:
-  src/typings/generated.ts:
+  ./src/typings/generated.ts:
     config:
       useIndexSignature: true
       skipTypename: true
@@ -19,5 +19,17 @@ generates:
             URL: URL
       - typescript-operations
       - typescript-resolvers
+  ../webapp/src/typings/generated.tsx:
+    documents: ../webapp/src/**/*.graphql
+    plugins:
+      - add: *interfaces
+      - typescript: *scalarmaps
+      - typescript-operations
+      - typescript-urql
+    config:
+      withComponent: false
+      withHOC: false
+      withHooks: true
+      skipTypename: true
 
 
