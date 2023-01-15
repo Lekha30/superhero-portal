@@ -1,0 +1,47 @@
+query SuperHeroSearch($name: String) {
+  searchSuperHero(name: $name) {
+    id
+    name
+    powerstats {
+      intelligence
+      strength
+      speed
+      durability
+      power
+      combat
+    }
+    image {
+      url
+    }
+  }
+}
+
+query viewSuperHeroDetails($id: Int!) {
+  viewSuperHeroDetails(id: $id) {
+   id
+    name
+    powerstats {
+      intelligence
+      strength
+      speed
+      durability
+      power
+      combat
+    }
+    image {
+      url
+    }
+  }
+}
+
+mutation updatePowerStats(
+  $id: Int!
+  $payload: PowerStatsInput!
+) {
+  updatePowerStats(id: $id, payload: $payload)
+}
+
+mutation updateAvatarAndStats($id: Id!) {
+  updateAvatarAndStats(id: $id, payload: $payload)
+}
+
