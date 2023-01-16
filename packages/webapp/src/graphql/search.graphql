@@ -16,9 +16,9 @@ query searchSuperHero($name: String!) {
   }
 }
 
-query viewSuperHeroDetails($id: Int!) {
-  viewSuperHeroDetails(id: $id) {
-   id
+query viewSuperHeroDetails($superheroId: Int!) {
+  viewSuperHeroDetails(superheroId: $superheroId) {
+    id
     name
     powerstats {
       intelligence
@@ -35,10 +35,10 @@ query viewSuperHeroDetails($id: Int!) {
 }
 
 mutation updatePowerStats(
-  $id: Int!
+  $superheroId: Int!
   $payload: PowerStatsInput!
 ) {
-  updatePowerStats(id: $id, payload: $payload) {
+  updatePowerStats(superheroId: $superheroId, payload: $payload) {
     id,
     name,
     powerstats {
@@ -52,8 +52,8 @@ mutation updatePowerStats(
   }
 }
 
-mutation updateAvatarAndStats($id: Int!, $payload: AvatarAndStatsInput!) {
-  updateAvatarAndStats(id: $id, payload: $payload) {
+mutation updateAvatarAndStats($superheroId: Int!, $payload: AvatarAndStatsInput!) {
+  updateAvatarAndStats(superheroId: $superheroId, payload: $payload) {
     id,
     name,
     powerstats {

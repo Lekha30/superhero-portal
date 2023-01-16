@@ -9,7 +9,6 @@ import { config } from '../config';
  * Consistently determine the API URL for the current client even when in a deploy preview or similar
  */
 const getAPIUrl = (): string => {
-  console.log(config.apiBaseUrl);
   return `${config.apiBaseUrl}/graphql`;
 };
 

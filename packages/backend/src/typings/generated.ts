@@ -65,14 +65,14 @@ export type Mutation = {
 
 
 export type MutationUpdateAvatarAndStatsArgs = {
-  id: Scalars['Int'];
   payload: AvatarAndStatsInput;
+  superheroId: Scalars['Int'];
 };
 
 
 export type MutationUpdatePowerStatsArgs = {
-  id: Scalars['Int'];
   payload: PowerStatsInput;
+  superheroId: Scalars['Int'];
 };
 
 export type PowerStats = {
@@ -105,7 +105,7 @@ export type QuerySearchSuperHeroArgs = {
 
 
 export type QueryViewSuperHeroDetailsArgs = {
-  id: Scalars['Int'];
+  superheroId: Scalars['Int'];
 };
 
 export type SuperHero = {
@@ -293,8 +293,8 @@ export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<Resolver
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  updateAvatarAndStats?: Resolver<ResolversTypes['SuperHeroTruncated'], ParentType, ContextType, RequireFields<MutationUpdateAvatarAndStatsArgs, 'id' | 'payload'>>;
-  updatePowerStats?: Resolver<ResolversTypes['SuperHeroTruncated'], ParentType, ContextType, RequireFields<MutationUpdatePowerStatsArgs, 'id' | 'payload'>>;
+  updateAvatarAndStats?: Resolver<ResolversTypes['SuperHeroTruncated'], ParentType, ContextType, RequireFields<MutationUpdateAvatarAndStatsArgs, 'payload' | 'superheroId'>>;
+  updatePowerStats?: Resolver<ResolversTypes['SuperHeroTruncated'], ParentType, ContextType, RequireFields<MutationUpdatePowerStatsArgs, 'payload' | 'superheroId'>>;
 }>;
 
 export type PowerStatsResolvers<ContextType = any, ParentType extends ResolversParentTypes['PowerStats'] = ResolversParentTypes['PowerStats']> = ResolversObject<{
@@ -309,7 +309,7 @@ export type PowerStatsResolvers<ContextType = any, ParentType extends ResolversP
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   searchSuperHero?: Resolver<Maybe<Array<ResolversTypes['SuperHero']>>, ParentType, ContextType, RequireFields<QuerySearchSuperHeroArgs, 'name'>>;
-  viewSuperHeroDetails?: Resolver<ResolversTypes['SuperHero'], ParentType, ContextType, RequireFields<QueryViewSuperHeroDetailsArgs, 'id'>>;
+  viewSuperHeroDetails?: Resolver<ResolversTypes['SuperHero'], ParentType, ContextType, RequireFields<QueryViewSuperHeroDetailsArgs, 'superheroId'>>;
 }>;
 
 export type SuperHeroResolvers<ContextType = any, ParentType extends ResolversParentTypes['SuperHero'] = ResolversParentTypes['SuperHero']> = ResolversObject<{

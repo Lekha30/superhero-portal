@@ -66,14 +66,14 @@ export type Mutation = {
 
 
 export type MutationUpdateAvatarAndStatsArgs = {
-  id: Scalars['Int'];
   payload: AvatarAndStatsInput;
+  superheroId: Scalars['Int'];
 };
 
 
 export type MutationUpdatePowerStatsArgs = {
-  id: Scalars['Int'];
   payload: PowerStatsInput;
+  superheroId: Scalars['Int'];
 };
 
 export type PowerStats = {
@@ -106,7 +106,7 @@ export type QuerySearchSuperHeroArgs = {
 
 
 export type QueryViewSuperHeroDetailsArgs = {
-  id: Scalars['Int'];
+  superheroId: Scalars['Int'];
 };
 
 export type SuperHero = {
@@ -144,14 +144,14 @@ export type SearchSuperHeroQueryVariables = Exact<{
 export type SearchSuperHeroQuery = { searchSuperHero?: Array<{ id: number, name: string, powerstats?: { intelligence?: number | null, strength?: number | null, speed?: number | null, durability?: number | null, power?: number | null, combat?: number | null } | null, image: { url: string } }> | null };
 
 export type ViewSuperHeroDetailsQueryVariables = Exact<{
-  id: Scalars['Int'];
+  superheroId: Scalars['Int'];
 }>;
 
 
 export type ViewSuperHeroDetailsQuery = { viewSuperHeroDetails: { id: number, name: string, powerstats?: { intelligence?: number | null, strength?: number | null, speed?: number | null, durability?: number | null, power?: number | null, combat?: number | null } | null, image: { url: string } } };
 
 export type UpdatePowerStatsMutationVariables = Exact<{
-  id: Scalars['Int'];
+  superheroId: Scalars['Int'];
   payload: PowerStatsInput;
 }>;
 
@@ -159,7 +159,7 @@ export type UpdatePowerStatsMutationVariables = Exact<{
 export type UpdatePowerStatsMutation = { updatePowerStats: { id: number, name: string, powerstats?: { intelligence?: number | null, strength?: number | null, speed?: number | null, durability?: number | null, power?: number | null, combat?: number | null } | null } };
 
 export type UpdateAvatarAndStatsMutationVariables = Exact<{
-  id: Scalars['Int'];
+  superheroId: Scalars['Int'];
   payload: AvatarAndStatsInput;
 }>;
 
@@ -191,8 +191,8 @@ export function useSearchSuperHeroQuery(options: Omit<Urql.UseQueryArgs<SearchSu
   return Urql.useQuery<SearchSuperHeroQuery, SearchSuperHeroQueryVariables>({ query: SearchSuperHeroDocument, ...options });
 };
 export const ViewSuperHeroDetailsDocument = gql`
-    query viewSuperHeroDetails($id: Int!) {
-  viewSuperHeroDetails(id: $id) {
+    query viewSuperHeroDetails($superheroId: Int!) {
+  viewSuperHeroDetails(superheroId: $superheroId) {
     id
     name
     powerstats {
@@ -214,8 +214,8 @@ export function useViewSuperHeroDetailsQuery(options: Omit<Urql.UseQueryArgs<Vie
   return Urql.useQuery<ViewSuperHeroDetailsQuery, ViewSuperHeroDetailsQueryVariables>({ query: ViewSuperHeroDetailsDocument, ...options });
 };
 export const UpdatePowerStatsDocument = gql`
-    mutation updatePowerStats($id: Int!, $payload: PowerStatsInput!) {
-  updatePowerStats(id: $id, payload: $payload) {
+    mutation updatePowerStats($superheroId: Int!, $payload: PowerStatsInput!) {
+  updatePowerStats(superheroId: $superheroId, payload: $payload) {
     id
     name
     powerstats {
@@ -234,8 +234,8 @@ export function useUpdatePowerStatsMutation() {
   return Urql.useMutation<UpdatePowerStatsMutation, UpdatePowerStatsMutationVariables>(UpdatePowerStatsDocument);
 };
 export const UpdateAvatarAndStatsDocument = gql`
-    mutation updateAvatarAndStats($id: Int!, $payload: AvatarAndStatsInput!) {
-  updateAvatarAndStats(id: $id, payload: $payload) {
+    mutation updateAvatarAndStats($superheroId: Int!, $payload: AvatarAndStatsInput!) {
+  updateAvatarAndStats(superheroId: $superheroId, payload: $payload) {
     id
     name
     powerstats {

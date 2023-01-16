@@ -94,21 +94,17 @@ export const Home: React.FC = (props: any) => {
     variables: searchSuperHeroIp
   });
 
-  console.log('result:', result);
   
   const handleSearch = ((event: any) =>  {
     event.preventDefault();
-    console.log('variables:', searchSuperHeroIp);
    
     reexecuteQuery({
       variables: searchSuperHeroIp,
       requestPolicy: 'network-only',
     });
-    console.log('results', result);
     });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('changed val:', event.target.value);
     setSearchSuperHero({ name: event?.target?.value });
   }
 

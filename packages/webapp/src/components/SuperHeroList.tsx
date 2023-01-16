@@ -7,24 +7,28 @@ import { useSearchSuperHeroQuery } from "../typings/generated";
 import SuperHeroCard from "./SuperHeroCard";
 
 const SuperHeroList = () => {
-  const [superHero, setSuperHero] = useState<{name: string}>({name: ''});
+  const [superHero, setSuperHero] = useState<string>('');
 
   const [{ data, error, fetching }, searchSuperHero ] =  useSearchSuperHeroQuery({
-    variables: superHero,
+    variables: {
+      name: superHero
+    },
     requestPolicy: 'network-only',
+    pause: !superHero
   });
 
  // handle submit
-  const handleSubmit = (superHero: {name: string}) => {
+  const handleSubmit = (superHero: string) => {
     setSuperHero(superHero);
+    searchSuperHero({variables: {name: superHero}});
   }
 
   // @ts-ignore
   const handleData = (data, superHero) => {
-    if (data.results){
-      return data.results.map((res: any) => 
-        <Grid>
-          <SuperHeroCard key={res.id} base={superHero.name} id={res.id} powerstats={res.powerstats} name={res.name} />
+    if (data.searchSuperHero.length > 0){
+      return data.searchSuperHero.map((res: any) => 
+        <Grid display={"flex"} flexDirection={"column"} alignItems={"center"}>
+          <SuperHeroCard key={res.id} image={res.image} id={res.id} powerstats={res.powerstats} name={res.name} />
         </Grid>
       );
       } else {
@@ -33,15 +37,14 @@ const SuperHeroList = () => {
     }
   
   return (
-    <div>
+    <div style={{display: "flex", alignItems: "center", marginLeft: "30px"}}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <SearchBox handleSubmit={handleSubmit} />
         </Grid>
         <Grid item xs={12}>
-          <div>Superhero details go in here!</div>
            {/* while waiting for query response */}
-           {fetching && <div>{`Loading, please wait...`}</div>}
+           {!data?.searchSuperHero && fetching && <div>{`Loading, please wait...`}</div>}
           {/* in case of query error */}
           {error && <div>{`Request error.`}</div>}
           {/* present superhero list */}

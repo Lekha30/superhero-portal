@@ -87,11 +87,11 @@ export const searchTypeDefs = gql`
 
   type Query {
     searchSuperHero(name: String!): [SuperHero!]
-    viewSuperHeroDetails(id: Int!): SuperHero!
+    viewSuperHeroDetails(superheroId: Int!): SuperHero!
   }
 
   type Mutation {
-    updatePowerStats(id: Int!, payload: PowerStatsInput!): SuperHeroTruncated!
-    updateAvatarAndStats(id: Int!, payload: AvatarAndStatsInput!): SuperHeroTruncated!
+    updatePowerStats(superheroId: Int!, payload: PowerStatsInput!): SuperHeroTruncated!
+    updateAvatarAndStats(superheroId: Int!, payload: AvatarAndStatsInput!): SuperHeroTruncated!
   }
 `;

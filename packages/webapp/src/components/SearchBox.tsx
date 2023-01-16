@@ -12,6 +12,7 @@ const SearchBox = ({ handleSubmit }: any) => {
             direction="row"
             alignItems="center"
             spacing={2}
+            marginLeft={5}
         >
             <Grid item>
                 <TextField id="superhero-id-text" label="Superhero name" variant="outlined" autoFocus margin="dense" onChange={handleSearch} required />
