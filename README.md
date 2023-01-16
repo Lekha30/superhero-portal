@@ -19,8 +19,9 @@ This is a monorepo which uses lerna.
 |4|Frontend - export 'default' (reexported as 'ReactNativeFile') was not found in './ReactNativeFile.js' (module has no exports)| Looks like I did not install typescript related packages for urql - yarn remove @urql/exchange-multipart-fetch
 |5| codegen errors-    Error 2: Cannot query field "powerstats" on type "SuperHeroSearch".|Incorrect mapping of results in the original schema- forgot to add select fields in the query
 |6| the name in the search was always undefined| corrected typings
-|7| Issue connecting to the graphql server | **could not be corrected **
-   
+|7| Issue connecting to the graphql server |  forgot to add fetchExchange
+|8| Issue with ids| realised that graphql schema args cannot have id hence renamed it in the schema
+
 
 
 ## Available Scripts
